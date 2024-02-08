@@ -6,7 +6,7 @@ export const GET: RequestHandler = async () => {
 		const prisma = new PrismaClient();
 		const products = await prisma.products.findMany();
 		prisma.$disconnect();
-
+		console.log('Products fetched');
 		return new Response(
 			JSON.stringify({
 				status: 200,
