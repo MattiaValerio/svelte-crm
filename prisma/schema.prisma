@@ -48,43 +48,27 @@ model Key {
   @@index([user_id])
 }
 
-model Reports {
-  id          Int        @id @default(autoincrement())
-  idAzienda   Int
-  createdBy   Int
-  EditedBy    Int
-  created_at  DateTime   @default(now())
-  updated_at  DateTime   @default(now())
-  Description String
-  Companies   Companies? @relation(fields: [companiesId], references: [id])
-  companiesId Int?
-}
-
 model Companies {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String?
-  created_at  DateTime  @default(now())
-  Reports     Reports[]
+  created_at  DateTime @default(now())
   Users       User[]
 }
 
 model Products {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   name        String
   description String
   price       Float
   available   Boolean
-  created_at  DateTime @default(now())
-
-  Images Images[]
+  created_at  DateTime   @default(now())
+  categoryId  Int
+  Category    Categories @relation(fields: [categoryId], references: [id])
 }
 
-model Images {
-  id         Int       @id @default(autoincrement())
-  name       String
-  image      String
-  created_at DateTime  @default(now())
-  Products   Products? @relation(fields: [productsId], references: [id])
-  productsId Int?
+model Categories {
+  id       Int        @id @default(autoincrement())
+  name     String
+  Products Products[]
 }
