@@ -1,24 +1,38 @@
 <script lang="ts">
 	import { fly, scale } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
+	import { goto } from '$app/navigation';
 
 	export let open: boolean = false;
+
+	type Link = {
+		name: string;
+		href: string;
+	};
+
 	let links = [
 		{ name: 'Home', href: '/' },
-		{ name: 'Companies', href: '/companies' }
+		{name: "Prodotti", href: "/products"},
+		{name: "Promozioni", href: "/promotions"},
+		{name: "Offerte", href: "/offerte"},
+		{name: "Aziende", href: "/companies"},
+		{ name: 'login', href: '/login' }
 	];
 
-	const closeMenu = () => {
+	const closeMenu = (link: Link) => {
 		open = false;
+		new Promise((resolve) => setTimeout(resolve, 450)).then(() => {
+			goto(link.href);
+		});
 	};
 </script>
 
 {#if open}
 	<div class="menu bg-black flex flex-col">
 		{#each links as link, i}
-			<a href={link.href} transition:fly={{ y: -25, delay: 50 * i }} on:click={closeMenu}>
+			<button transition:fly={{ y: -25, delay: 50 * i }} on:click={()=> closeMenu(link)} class="hover:underline underline-offset-4">
 				{link.name}
-			</a>
+			</button>
 		{/each}
 	</div>
 

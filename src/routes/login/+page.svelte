@@ -1,95 +1,39 @@
 <script lang="ts">
-	import { enhance } from '$app/forms';
-	import type { PageData, ActionData } from './$types';
-
-	export let data: PageData;
-	export let form: ActionData;
-
-	$: response = form;
+    import type { PageData } from './$types';
+    
+    export let pageData: PageData;
 </script>
 
-<div
-	style="display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 3rem;"
->
-	<div class="form-div">
-		<form method="POST" action="?/register" class="form" use:enhance>
-			<div class="form-group">
-				<label for="username">Username</label>
-				<input name="username" type="text" class="form-control" />
-			</div>
-			<div class="form-group">
-				<label for="password">Password</label>
-				<input name="password" type="password" class="form-control" />
-			</div>
-			<!-- Add a div wih a selector that has all the user roles -->
-			<div class="form-group">
-				<label for="role">Role</label>
-				<select name="role" class="form-control">
-					<option value="">Select a role</option>
-					<option value="admin">Admin</option>
-					<option value="user">User</option>
-				</select>
-			</div>
-			<button type="submit" class="btn btn-primary">Register</button>
-		</form>
-	</div>
-	{#if response?.status === 200}
-		<div
-			style="display: flex; flex-direction: column; justify-content: center; align-items: center;"
-		>
-			<h2 style="text-align: center;">✅ SUCCESSFULL GENERATION ✅</h2>
-			<div
-				style="inline-size: 300px;
-    overflow-wrap: break-word;"
-			>
-				<p style="text-align: center;">{response.response.jwt}</p>
-			</div>
-		</div>
-	{/if}
 
-	{#if response?.status === 400}
-		<div>
-			<h2 style="text-align: center;">❌ ERROR DURING GENERATION ❌</h2>
-			<div style="inline-size: 300px">
-				<p>{response.response}</p>
-			</div>
-		</div>
-	{/if}
+<div class=" p-5 h-full flex items-center justify-center ">
+    <form class="flex flex-col gap-3 mt-7 justify-center items-center border p-5 rounded-lg shadow-xl w-96">
+        <div class="flex flex-col ">
+            <label for="username" class="font-semibold">Username</label>
+            <input name="username" type="text" class="px-2 py-1 border rounded-md shadow-md"/>
+        </div>
+        <div class="flex flex-col">
+            <label for="password" class="font-semibold">Password</label>
+            <input name="password" type="password" class="px-2 py-1 border rounded-md shadow-md"/>
+        </div>
+        <div class="flex flex-col items-center gap-1">
+            <button type="submit" class="border px-3 border-blue-300 bg-blue-400 text-white font-bold capit py-1 w-32 rounded-md shadow-md">Login</button>
+            <p class="text-xs mt-1">Not registered? <a href="/register" class="text-blue-600 ">Sig-up now </a></p>    
+        </div>
+    </form>
+    <!-- {#if pageData?.status === 400}
+        <div>
+            <h2>❌ ERROR DURING LOGIN ❌</h2>
+            <div>
+                <p>{pageData.response}</p>
+            </div>
+        </div>
+    {/if}
+    {#if pageData?.status === 200}
+        <div>
+            <h2>✅ SUCCESSFULL LOGIN ✅</h2>
+            <div>
+                <p>{pageData.response.jwt}</p>
+            </div>
+        </div>
+    {/if} -->
 </div>
-
-<style>
-	.form-div {
-		width: 100%;
-		max-width: 400px;
-		margin: 0 auto;
-		padding: 1rem;
-		background-color: #fff;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-	}
-	.form {
-		width: 100%;
-	}
-	.form-group {
-		margin-bottom: 1rem;
-	}
-	.form-control {
-		width: 100%;
-		padding: 0.5rem;
-		font-size: 1rem;
-		border: 1px solid #ccc;
-		border-radius: 4px;
-	}
-	.btn {
-		width: 100%;
-		padding: 0.5rem;
-		font-size: 1rem;
-		border: none;
-		border-radius: 4px;
-		background-color: #007bff;
-		color: #fff;
-		cursor: pointer;
-	}
-</style>

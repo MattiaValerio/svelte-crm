@@ -1,3 +1,9 @@
+<script>
+	//create an event dispatcher
+	import { createEventDispatcher } from 'svelte';
+	const closeMenu = createEventDispatcher();
+</script>
+
 <div class="flex flex-col p-5">
 	<form
 		method="post"
@@ -17,5 +23,13 @@
 			value="Submit"
 			class="bg-blue-400 rounded-md h-14 text-white font-bold hover:bg-blue-500"
 		/>
+		<input
+			type="button"
+			on:click={() => closeMenu('close')}
+			value="Cancel"
+			class="bg-red-400 rounded-md h-14 text-white font-bold hover:bg-blue-500"
+		/>
 	</form>
+
+	
 </div>

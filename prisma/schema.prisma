@@ -11,14 +11,22 @@ datasource db {
 }
 
 model User {
-  id           String    @id @unique
+  id           String     @id @unique
   name         String
   lastname     String
-  role         String
-  created_at   DateTime  @default(now())
-  companyId    Int?
+  role         Roles      @relation(references: [id], fields: [rolesId])
+  created_at   DateTime   @default(now())
   auth_session Session[]
   key          Key[]
+  rolesId      Int
+  Companies    Companies? @relation(fields: [companiesId], references: [id])
+  companiesId  Int?
+}
+
+model Roles {
+  id   Int    @id @default(autoincrement())
+  name String
+  User User[]
 }
 
 model Session {
@@ -55,7 +63,28 @@ model Reports {
 model Companies {
   id          Int       @id @default(autoincrement())
   name        String
-  description String
+  description String?
   created_at  DateTime  @default(now())
   Reports     Reports[]
+  Users       User[]
+}
+
+model Products {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  available   Boolean
+  created_at  DateTime @default(now())
+
+  Images Images[]
+}
+
+model Images {
+  id         Int       @id @default(autoincrement())
+  name       String
+  image      String
+  created_at DateTime  @default(now())
+  Products   Products? @relation(fields: [productsId], references: [id])
+  productsId Int?
 }

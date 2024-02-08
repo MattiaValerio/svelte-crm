@@ -15,14 +15,12 @@ export const actions: Actions = {
 			};
 
 		try {
-			console.log('Creating company');
 			await prisma.companies.create({
 				data: {
 					name: name,
 					description: description
 				}
 			});
-			console.log('Company created');
 			return {
 				status: 200,
 				response: 'Company created'
