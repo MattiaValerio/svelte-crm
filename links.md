@@ -8,4 +8,4 @@ Lucia schema setup:
 https://v2.lucia-auth.com/database-adapters/prisma/
 
 PgAdmin:
-http://178.18.254.192:5050/
+http://178.18.254.192:5050/ 

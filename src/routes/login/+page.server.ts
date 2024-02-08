@@ -1,5 +1,4 @@
 import type { Actions } from '@sveltejs/kit';
-import type { RequestEvent } from './$types';
 
 export const actions = {
 	register: async ({ fetch, request }) => {
@@ -16,7 +15,7 @@ export const actions = {
 			};
 
 		//send the username and the password to the server to be verified and a jwt token to be generated
-		const response = await fetch('/api', {
+		const response = await fetch('/api/jwt', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
-import type { RequestHandler } from './$types';
-import { SECRET_API_KEY } from '$env/static/private';
-import { SignJWT, jwtVerify } from 'jose';
+import type { RequestHandler } from '../$types';
+import { SECRET_JWT_TOKEN } from '$env/static/private';
+import { SignJWT } from 'jose';
 
 export const POST: RequestHandler = async ({ request }) => {
 	const authHead = request.headers.get('authorization');
@@ -9,7 +9,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const { username, password } = await request.json();
 
 	// Encode the secret key to be used in the jwt token generation and verification process
-	const secret = new TextEncoder().encode(SECRET_API_KEY);
+	const secret = new TextEncoder().encode(SECRET_JWT_TOKEN);
 
 	// Sign the jwt token with the secret key and the claims to be included in the token (username and role)
 	const jwt = await new SignJWT({

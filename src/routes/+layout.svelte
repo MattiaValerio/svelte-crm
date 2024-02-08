@@ -6,22 +6,18 @@
 	let open: boolean;
 </script>
 
-	<div class="bg-black w-screen flex items-center gap-5">
-		<div class="h-full px-3 font-bold flex items-center">
-			<h1 class="text-white text-2xl text-center">MV</h1>
-		</div>
-		<div class=" w-full flex justify-end" >
-			<Hamburger bind:open --color="white"/>
-		</div>
+<div class="bg-black w-screen flex items-center gap-5">
+	<div class="h-full px-3 font-bold flex items-center">
+		<h1 class="text-white text-2xl text-center">MV</h1>
 	</div>
-	<div class="flex flex-col justify-center items-center bg-black pb-2">
-		<Menu bind:open />
+	<div class=" w-full flex justify-end">
+		<Hamburger bind:open --color="white" />
 	</div>
+</div>
+<div class="flex absolute left-0 right-0 flex-col justify-center items-center bg-black pb-2 z-10">
+	<Menu bind:open />
+</div>
 
-
-
-
-<slot />
-
-
-
+<div class="p-3">
+	<slot />
+</div>
