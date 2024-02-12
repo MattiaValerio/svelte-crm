@@ -7,6 +7,8 @@ declare global {
 			validate: import('@lucia-auth/svelte-kit').Validate;
 			validateuser: import('@lucia-auth/svelte-kit').ValidateUser;
 			setSession: import('@lucia-auth/svelte-kit').SetSession;
+			user: import('lucia').User | null;
+			session: import('lucia').Session | null;
 		}
 		// interface PageData {}
 		// interface PageState {}
@@ -15,7 +17,7 @@ declare global {
 	let prisma: PrismaClient;
 
 	declare namespace Lucia {
-		type Auth = import('$lib/server/lucia').Auth;
+		type Auth = import('$lib/server/auth').Auth;
 		type UserAttributes = {
 			name: string;
 			lastname: string;

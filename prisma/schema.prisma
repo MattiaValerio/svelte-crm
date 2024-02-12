@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,43 +8,30 @@ datasource db {
 }
 
 model User {
-  id           String     @id @unique
-  name         String
-  lastname     String
-  username     String
-  email        String
-  role         Roles      @relation(references: [id], fields: [rolesId])
-  created_at   DateTime   @default(now())
-  auth_session Session[]
-  key          Key[]
-  rolesId      Int
-  Companies    Companies? @relation(fields: [companiesId], references: [id])
-  companiesId  Int?
+  id          String     @id @unique
+  name        String
+  lastname    String
+  username    String
+  email       String
+  created_at  DateTime   @default(now())
+  rolesId     Int
+  companiesId Int?
+  sessions    Session[]
+  Companies   Companies? @relation(fields: [companiesId], references: [id])
+  role        Roles      @relation(fields: [rolesId], references: [id])
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Roles {
   id   Int    @id @default(autoincrement())
   name String
   User User[]
-}
-
-model Session {
-  id             String @id @unique
-  user_id        String
-  active_expires BigInt
-  idle_expires   BigInt
-  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
-
-  @@index([user_id])
-}
-
-model Key {
-  id              String  @id @unique
-  hashed_password String?
-  user_id         String
-  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
-
-  @@index([user_id])
 }
 
 model Companies {
@@ -59,18 +43,10 @@ model Companies {
 }
 
 model Products {
-  id          Int        @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String
   price       Float
   available   Boolean
-  created_at  DateTime   @default(now())
-  categoryId  Int
-  Category    Categories @relation(fields: [categoryId], references: [id])
-}
-
-model Categories {
-  id       Int        @id @default(autoincrement())
-  name     String
-  Products Products[]
+  created_at  DateTime @default(now())
 }

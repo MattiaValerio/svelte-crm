@@ -5,7 +5,7 @@
 </script>
 
 <div class="flex items-center justify-center h-full">
-    <form class="flex flex-col gap-3 mt-7 justify-center items-center border p-5 rounded-lg shadow-xl w-96">
+    <form method="POST" action="?/registerUser" class="flex flex-col gap-3 mt-7 justify-center items-center border p-5 rounded-lg shadow-xl w-96">
         <div class="flex flex-col w-full">
             <label for="name" class="font-semibold">Name</label>
             <input name="name" type="text" class="px-2 py-1 border rounded-md shadow-md"/>

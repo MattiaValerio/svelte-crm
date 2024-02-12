@@ -1,6 +1,18 @@
 import { PrismaClient } from '@prisma/client';
 import { fail, type Actions } from '@sveltejs/kit';
+import type { PageServerLoad } from './$types';
+import { lucia } from '$lib/server/auth';
 const prisma = new PrismaClient();
+
+export const load = (async () => {
+	const sessions = await lucia.getUserSessions('0bfifqfkf8l8785c');
+
+	return {
+		props: {
+			sessions
+		}
+	};
+}) satisfies PageServerLoad;
 
 export const actions: Actions = {
 	addCompany: async ({ fetch, request }) => {
