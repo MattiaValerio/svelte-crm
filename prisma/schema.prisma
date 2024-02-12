@@ -14,6 +14,8 @@ model User {
   id           String     @id @unique
   name         String
   lastname     String
+  username     String
+  email        String
   role         Roles      @relation(references: [id], fields: [rolesId])
   created_at   DateTime   @default(now())
   auth_session Session[]

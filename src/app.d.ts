@@ -3,12 +3,26 @@
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			validate: import('@lucia-auth/svelte-kit').Validate;
+			validateuser: import('@lucia-auth/svelte-kit').ValidateUser;
+			setSession: import('@lucia-auth/svelte-kit').SetSession;
+		}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
 	}
-	var prisma: PrismaClient;
+	let prisma: PrismaClient;
+
+	declare namespace Lucia {
+		type Auth = import('$lib/server/lucia').Auth;
+		type UserAttributes = {
+			name: string;
+			lastname: string;
+			email: string;
+			roleId: number;
+		};
+	}
 }
 
 export {};
