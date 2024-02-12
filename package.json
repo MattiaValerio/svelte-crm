@@ -36,8 +36,10 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@lucia-auth/adapter-prisma": "^4.0.0",
 		"@prisma/client": "^5.9.1",
 		"jose": "^5.2.1",
+		"lucia": "^3.0.1",
 		"oslo": "^1.1.0"
 	}
 }
