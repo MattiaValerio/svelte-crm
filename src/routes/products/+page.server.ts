@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import type { Actions, PageServerLoad } from './$types';
+import { generateId } from 'lucia';
 
 export const load = (async ({ fetch }) => {
 	const res = await fetch('/api/products').then((res) => res.json());
@@ -22,6 +23,7 @@ export const actions: Actions = {
 		try {
 			await prisma.products.create({
 				data: {
+					id: generateId(16),
 					name: name,
 					description: description,
 					price: parseFloat(price!),

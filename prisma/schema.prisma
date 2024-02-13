@@ -43,7 +43,7 @@ model Companies {
 }
 
 model Products {
-  id          Int      @id @default(autoincrement())
+  id          String   @id
   name        String
   description String
   price       Float
