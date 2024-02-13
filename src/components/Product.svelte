@@ -1,4 +1,6 @@
 <script lang="ts">
+	import type { User } from "lucia";
+
     type Product = {
         id: number;
         name: string;
@@ -7,7 +9,7 @@
         available: boolean;
         createdAt: string;
     }
-
+    export let user: User | null | undefined;
     export let product: Product;
 </script>
 
@@ -20,7 +22,10 @@
         {:else}
             <p class="text-red-500">Non disponibile</p>
         {/if}
-        <p class="font-semibold">€ {product.price}</p>
+        {#if user?.roleId != 1}
+            <p class="font-semibold">€ {product.price}</p>
+        {/if}
+        
     </div>
     <div class="flex flex-col gap-2">
         <button class="bg-blue-400 rounded-md px-4 py-2">E</button>

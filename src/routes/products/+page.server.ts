@@ -1,11 +1,26 @@
 import { PrismaClient } from '@prisma/client';
 import type { Actions, PageServerLoad } from './$types';
 import { generateId } from 'lucia';
+import { lucia } from '$lib/server/auth';
 
-export const load = (async ({ fetch }) => {
+export const load = (async ({ fetch, cookies }) => {
+	const token = cookies.get(lucia.sessionCookieName);
+
+	if (!token) {
+		return {
+			logged: false
+		};
+	}
+
+	const { user, session } = await lucia.validateSession(token);
+
+	//get all the products from the server
 	const res = await fetch('/api/products').then((res) => res.json());
+
 	return {
-		products: res.body
+		products: res.body,
+		user,
+		session
 	};
 }) satisfies PageServerLoad;
 

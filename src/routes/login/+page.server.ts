@@ -16,7 +16,7 @@ export const actions: Actions = {
 		const formData = await event.request.formData();
 		const username = formData.get('username')!.toString();
 		const password = formData.get('password');
-		console.log('d');
+
 		//check if password is valid
 		if (typeof password !== 'string' || password.length < 8 || password.length > 255) {
 			return fail(400, {

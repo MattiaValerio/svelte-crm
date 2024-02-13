@@ -40,7 +40,8 @@ export const actions: Actions = {
 					username,
 					password: hashedPassword,
 					email,
-					rolesId: 1
+					roleId: 1,
+					created_at: new Date()
 				}
 			});
 			prisma.$disconnect();

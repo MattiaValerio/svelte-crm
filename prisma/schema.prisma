@@ -15,11 +15,11 @@ model User {
   email       String
   password    String
   created_at  DateTime   @default(now())
-  rolesId     Int
+  roleId      Int
   companiesId Int?
   sessions    Session[]
   Companies   Companies? @relation(fields: [companiesId], references: [id])
-  role        Roles      @relation(fields: [rolesId], references: [id])
+  role        Roles      @relation(fields: [roleId], references: [id])
 }
 
 model Session {

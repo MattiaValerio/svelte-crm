@@ -2,24 +2,15 @@
 	import { fly, scale } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import { goto } from '$app/navigation';
-	import type { Session } from 'lucia';
+	import type { Session, User } from 'lucia';
 
 	export let open: boolean = false;
-	export let auth: Session | undefined | null;
+	export let auth: { user: User; session: Session; } | { user: null; session: null; } | undefined;
 	
 	type Link = {
 		name: string;
 		href: string;
 	};
-
-	let links = [
-		{ name: 'Home', href: '/' },
-		{name: "Prodotti", href: "/products"},
-		{name: "Promozioni", href: "/promotions"},
-		{name: "Offerte", href: "/offerte"},
-		{name: "Aziende", href: "/companies"},
-		{name: 'login', href: '/login' }
-	];
 
 	const closeMenu = (link: Link) => {
 		open = false;
@@ -31,17 +22,40 @@
 
 {#if open}
 	<div class="menu bg-black flex flex-col">
-		{#each links as link, i}
-			{#if auth != null && auth != undefined && (link.name == "login")}
-				<button transition:fly={{ y: -25, delay: 50 * links.length }} on:click={()=> closeMenu({name: "profilo", href: "/profile"})} class="hover:underline underline-offset-4">
-					Profilo
-				</button>
-			{:else}
-				<button transition:fly={{ y: -25, delay: 50 * i }} on:click={()=> closeMenu(link)} class="hover:underline underline-offset-4">
-					{link.name}
-				</button>	
-			{/if}	
-		{/each}
+		<button  on:click={()=> closeMenu({name: "Home", href: "/"})} class="hover:underline underline-offset-4">
+			Home
+		</button>
+		<button  on:click={()=> closeMenu({name: "Prodotti", href: "/products"})} class="hover:underline underline-offset-4">
+			Prodotti
+		</button>
+		{#if auth?.user?.roleId === 3 || auth?.user?.roleId === 2}
+		<button  on:click={()=> closeMenu({name: "Offerte", href: "/offerte"})} class="hover:underline underline-offset-4">
+			Offerte
+		</button>
+		{/if}
+		<button  on:click={()=> closeMenu({name: "Promozioni", href: "/promotions"})} class="hover:underline underline-offset-4">
+			Promozioni
+		</button>
+		
+		{#if auth?.user?.roleId === 2}
+		<button  on:click={()=> closeMenu({name: "Aziende", href: "/companies"})} class="hover:underline underline-offset-4">
+			Aziende
+		</button>
+		{/if}
+		{#if auth?.user?.roleId === 2}
+		<button  on:click={()=> closeMenu({name: "Users", href: "/users"})} class="hover:underline underline-offset-4">
+			Gestione Utenti
+		</button>
+		{/if}
+		{#if auth != null && auth != undefined}
+			<button  on:click={()=> closeMenu({name: "profilo", href: "/profile"})} class="hover:underline underline-offset-4">
+				Profilo
+			</button>
+		{:else}
+			<button  on:click={()=> closeMenu({name:"login", href:"/login"})} class="hover:underline underline-offset-4">
+				Login
+			</button>	
+		{/if}
 		
 		
 	</div>

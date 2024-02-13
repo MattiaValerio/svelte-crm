@@ -19,7 +19,7 @@
 	</div>
 </div>
 <div class="flex absolute left-0 right-0 flex-col justify-center items-center bg-black pb-2 z-10">
-	<Menu bind:open auth={data.info?.session}/>
+	<Menu bind:open auth={data.info}/>
 </div>
 
 <div class="p-3">

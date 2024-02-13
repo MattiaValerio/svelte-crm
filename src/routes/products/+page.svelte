@@ -1,9 +1,7 @@
 <script lang="ts">
     import NewProduct from '../../components/NewProduct.svelte';
-import Product from '../../components/Product.svelte';
-import type { PageData } from './$types';
-    
-    export let data: PageData;
+    import Product from '../../components/Product.svelte';
+    import { page } from '$app/stores';
 
     let newProduct: boolean = false;
 
@@ -13,17 +11,20 @@ import type { PageData } from './$types';
 
 </script>
 
-<button on:click={()=> createNewProduct()} class="bg-red-500"> CREATE NEW PRODUCT</button>
+{#if $page.data.user?.roleId === 2}
+    <button on:click={()=> createNewProduct()} class="bg-red-500"> CREATE NEW PRODUCT</button>
+{/if}
+
 
 {#if newProduct}
 
     <NewProduct />
 
-    {:else}
+{:else}
 
-        {#each data.products as item}
-            <Product product={item} />
-        {/each}
+    {#each $page.data?.products as item}
+        <Product product={item} user={$page.data?.user}/>
+    {/each}
 
 {/if}
 
