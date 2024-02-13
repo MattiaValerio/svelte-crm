@@ -30,13 +30,11 @@ export const POST: RequestHandler = async ({ request }) => {
 		console.log(req);
 		await prisma.products.create({
 			data: {
+				id: req.id,
 				name: req.name,
 				description: req.description,
 				price: parseFloat(req.price),
-				available: req.available,
-				Categories: {
-					connect: { id: req.categoriesId }
-				}
+				available: req.available
 			}
 		});
 

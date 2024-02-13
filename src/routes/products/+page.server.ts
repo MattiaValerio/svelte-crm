@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
 import type { Actions, PageServerLoad } from './$types';
+import { generateId } from 'lucia';
 
 export const load = (async ({ fetch }) => {
 	const res = await fetch('/api/products').then((res) => res.json());
@@ -14,22 +15,19 @@ export const actions: Actions = {
 
 		//read from the form and send the data to the server
 		const data = await request.formData();
-		const name = data.get('name')?.toString();
+		const name = data.get('name')!.toString();
 		const description = data.get('description')!.toString();
 		const price = data.get('price')?.toString();
-		const categoriesId = data.get('categoriesId')!.toString();
 		const available = data.get('available')?.toString() === 'on' ? true : false;
 
 		try {
 			await prisma.products.create({
 				data: {
+					id: generateId(16),
 					name: name,
 					description: description,
 					price: parseFloat(price!),
-					available: available,
-					Categories: {
-						connect: { id: parseInt(categoriesId) }
-					}
+					available: available
 				}
 			});
 

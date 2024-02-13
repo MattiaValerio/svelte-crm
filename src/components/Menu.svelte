@@ -2,9 +2,11 @@
 	import { fly, scale } from 'svelte/transition';
 	import { quadOut } from 'svelte/easing';
 	import { goto } from '$app/navigation';
+	import type { Session } from 'lucia';
 
 	export let open: boolean = false;
-
+	export let auth: Session | undefined | null;
+	
 	type Link = {
 		name: string;
 		href: string;
@@ -16,7 +18,7 @@
 		{name: "Promozioni", href: "/promotions"},
 		{name: "Offerte", href: "/offerte"},
 		{name: "Aziende", href: "/companies"},
-		{ name: 'login', href: '/login' }
+		{name: 'login', href: '/login' }
 	];
 
 	const closeMenu = (link: Link) => {
@@ -30,10 +32,18 @@
 {#if open}
 	<div class="menu bg-black flex flex-col">
 		{#each links as link, i}
-			<button transition:fly={{ y: -25, delay: 50 * i }} on:click={()=> closeMenu(link)} class="hover:underline underline-offset-4">
-				{link.name}
-			</button>
+			{#if auth != null && auth != undefined && (link.name == "login")}
+				<button transition:fly={{ y: -25, delay: 50 * links.length }} on:click={()=> closeMenu({name: "profilo", href: "/profile"})} class="hover:underline underline-offset-4">
+					Profilo
+				</button>
+			{:else}
+				<button transition:fly={{ y: -25, delay: 50 * i }} on:click={()=> closeMenu(link)} class="hover:underline underline-offset-4">
+					{link.name}
+				</button>	
+			{/if}	
 		{/each}
+		
+		
 	</div>
 
 	<div class="bar" transition:scale={{ duration: 450, easing: quadOut, opacity: 1 }} />
@@ -49,15 +59,7 @@
 		color: #eef;
 	}
 
-	p {
-		cursor: pointer;
-		width: max-content;
-		margin: 1rem auto;
-	}
-
-	p:hover {
-		text-decoration: underline;
-	}
+	
 
 	.bar {
 		border-style: solid;
@@ -66,4 +68,6 @@
 		height: 0;
 		width: 80%;
 	}
+
+	
 </style>
