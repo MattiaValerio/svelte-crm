@@ -1,10 +1,10 @@
 import { fail, redirect, type Actions } from '@sveltejs/kit';
 // import type { PageServerLoad, Actions } from './$types';
+import { lucia } from '$lib/server/auth';
 import { PrismaClient } from '@prisma/client';
 import { generateId } from 'lucia';
-import { lucia } from '$lib/server/auth';
-import type { PageServerLoad } from '../$types';
 import { Argon2id } from 'oslo/password';
+import type { PageServerLoad } from '../$types';
 
 export const load = (async ({ cookies }) => {
 	const token = cookies.get(lucia.sessionCookieName);
@@ -40,8 +40,15 @@ export const actions: Actions = {
 					username,
 					password: hashedPassword,
 					email,
-					roleId: 1,
-					created_at: new Date()
+					created_at: new Date(),
+					role: {
+						connect: {
+							id: 1
+						}
+					},
+					sessions: undefined,
+					Companies: undefined,
+					companiesId: undefined
 				}
 			});
 			prisma.$disconnect();
