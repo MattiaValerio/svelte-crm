@@ -13,6 +13,7 @@ model User {
   lastname    String
   username    String
   email       String
+  password    String
   created_at  DateTime   @default(now())
   rolesId     Int
   companiesId Int?
@@ -22,10 +23,11 @@ model User {
 }
 
 model Session {
-  id        String   @id
-  userId    String
-  expiresAt DateTime
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id             String   @id
+  userId         String
+  expiresAt      DateTime
+  active_expires BigInt
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Roles {

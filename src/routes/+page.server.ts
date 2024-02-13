@@ -1,31 +1,17 @@
 import type { PageServerLoad } from './$types';
-import { lucia } from '$lib/server/auth';
 import type { Actions } from '@sveltejs/kit';
-import { PrismaClient } from '@prisma/client';
+import { lucia } from '$lib/server/auth';
 
 export const load = (async ({ cookies }) => {
-	const prisma = new PrismaClient();
-
-	const token = cookies.get('auth_session');
+	const token = cookies.get(lucia.sessionCookieName);
 	if (!token) {
 		return {
-			status: 401,
-			error: 'Unauthorized'
+			logged: false
 		};
 	}
 
-	const user = await prisma.user.findMany({
-		where: {
-			id: sessions.map((session) => session.userId).toString()
-		}
-	});
-
-	return {
-		resp: {
-			user: user[0],
-			session: sessions[0]
-		}
-	};
+	const user = await lucia.validateSession(token);
+	return { info: user };
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {} satisfies Actions;

@@ -3,8 +3,6 @@ import { SECRET_JWT_TOKEN } from '$env/static/private';
 import { SignJWT } from 'jose';
 
 export const POST: RequestHandler = async ({ request }) => {
-	const authHead = request.headers.get('authorization');
-
 	// get from the request the username and the password
 	const { username, password } = await request.json();
 
