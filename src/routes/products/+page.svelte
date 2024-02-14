@@ -22,7 +22,12 @@
 {#if newProduct}
 	<NewProduct on:closePopUp={()=> newProduct = false}/>
 {:else}
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-5">
 	{#each $page.data?.products as item}
+	<div class="col-span-1">
 		<Product product={item} user={$page.data?.user} />
+	</div>
 	{/each}
+</div>
+	
 {/if}

@@ -9,7 +9,7 @@
             available: boolean;
             createdAt: string;
         }
-    
+    export let UpdatingProduct: boolean = false;
     export let product: Product = {
         id: 0,
         name: "",
@@ -26,7 +26,7 @@
 </script>
 
 
-<form method="POST" action="?/addProduct" class="border rounded-md flex flex-col gap-3 p-4">
+<form method="POST" action={UpdatingProduct ? "?/updateProuct" : "?/addProduct"} class="border rounded-md flex flex-col gap-3 p-4">
     <div class="flex flex-col">
         <label for="name" class="uppercase font-semibold">Codice</label>
         <input type="text" name="name" class="border rounded-md h-10 px-3" value={product?.name}>
@@ -49,6 +49,6 @@
     </div> -->
     <div class="flex justify-around gap-3 mt-5">
         <button on:click={closePopUp} class="bg-red-500 py-3 w-full text-white uppercase font-semibold rounded-md">ANNULLA</button>
-        <button type="submit" class="bg-green-500 py-3 w-full text-white uppercase font-semibold rounded-md">CREA</button>
+        <button type="submit" class="bg-green-500 py-3 w-full text-white uppercase font-semibold rounded-md">{UpdatingProduct ? "MODIFICA" : "CREA"}</button>
     </div>
 </form>

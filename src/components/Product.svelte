@@ -17,7 +17,7 @@
 </script>
 
 {#if editPopUp}
-    <NewProduct product={product} on:closePopUp={()=> editPopUp = false}/>
+    <NewProduct UpdatingProduct={true} product={product} on:closePopUp={()=> editPopUp = false}/>
 
 {:else}
     <div class="border rounded-md p-3 flex ">
@@ -32,11 +32,11 @@
             {#if user?.roleId != 1}
                 <p class="font-semibold">€ {product?.price}</p>
             {/if}
+            <div class="flex gap-2">
+                <button class="px-3 py-2 w-full bg-red-400 rounded-md ">D</button>
+                <button on:click={()=> editPopUp = !editPopUp} class="bg-blue-400 w-full rounded-md px-4 py-2">E</button>
+            </div>
             
-        </div>
-        <div class="flex flex-col gap-2">
-            <button on:click={()=> editPopUp = !editPopUp} class="bg-blue-400 rounded-md px-4 py-2">E</button>
-            <button class="px-3 py-2 bg-red-400 rounded-md ">D</button>
         </div>
     </div>
 {/if}

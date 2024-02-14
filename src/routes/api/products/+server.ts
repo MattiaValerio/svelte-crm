@@ -6,7 +6,6 @@ export const GET: RequestHandler = async () => {
 		const prisma = new PrismaClient();
 		const products = await prisma.products.findMany();
 		prisma.$disconnect();
-		console.log('Products fetched');
 		return new Response(
 			JSON.stringify({
 				status: 200,
@@ -27,7 +26,6 @@ export const POST: RequestHandler = async ({ request }) => {
 	try {
 		const prisma = new PrismaClient();
 		const req = await request.json();
-		console.log(req);
 		await prisma.products.create({
 			data: {
 				id: req.id,
@@ -38,8 +36,6 @@ export const POST: RequestHandler = async ({ request }) => {
 				created_at: new Date()
 			}
 		});
-
-		console.log('Product created');
 		prisma.$disconnect();
 
 		return new Response(

@@ -2,7 +2,6 @@
 	import type { User } from 'lucia';
 
 	export let user: User;
-	console.log(user);
 	const getRole = (roleId: number) => {
 		switch (roleId) {
 			case 1:
