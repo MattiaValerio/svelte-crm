@@ -1,7 +1,7 @@
 import { lucia } from '$lib/server/auth';
 import { PrismaClient } from '@prisma/client';
-import { generateId } from 'lucia';
 import type { Actions, PageServerLoad } from './$types';
+import { generateId } from 'lucia';
 
 export const load = (async ({ fetch, cookies }) => {
 	const token = cookies.get(lucia.sessionCookieName);
@@ -28,7 +28,7 @@ export const load = (async ({ fetch, cookies }) => {
 }) satisfies PageServerLoad;
 
 export const actions: Actions = {
-	addProduct: async ({ request }) => {
+	addProduct: async ({ request, fetch }) => {
 		const prisma = new PrismaClient();
 
 		//read from the form and send the data to the server
@@ -39,17 +39,19 @@ export const actions: Actions = {
 		const available = data.get('available')?.toString() === 'on' ? true : false;
 
 		try {
-			await prisma.products.create({
-				data: {
+			await fetch('/api/products', {
+				method: 'POST',
+				body: JSON.stringify({
 					id: generateId(16),
-					name: name,
-					description: description,
-					price: parseFloat(price!),
-					available: available
+					name,
+					description,
+					price,
+					available
+				}),
+				headers: {
+					'Content-Type': 'application/json'
 				}
 			});
-
-			prisma.$disconnect();
 
 			return {
 				status: 200,

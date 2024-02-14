@@ -34,7 +34,8 @@ export const POST: RequestHandler = async ({ request }) => {
 				name: req.name,
 				description: req.description,
 				price: parseFloat(req.price),
-				available: req.available
+				available: req.available,
+				created_at: new Date()
 			}
 		});
 

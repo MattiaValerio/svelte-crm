@@ -10,7 +10,7 @@
 	}
 </script>
 
-{#if $page.data.user?.roleId === 2}
+{#if $page.data.user?.roleId === 2 && newProduct === false}
 	<button
 		on:click={() => createNewProduct()}
 		class="flex bg-red-500 text-white font-bold w-full items-center justify-center py-3 rounded-md my-3"
@@ -20,7 +20,7 @@
 {/if}
 
 {#if newProduct}
-	<NewProduct />
+	<NewProduct on:closePopUp={()=> newProduct = false}/>
 {:else}
 	{#each $page.data?.products as item}
 		<Product product={item} user={$page.data?.user} />

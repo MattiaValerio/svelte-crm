@@ -2,7 +2,6 @@
 	import { enhance } from '$app/forms';
     import type { PageData } from './$types';
     import { page } from '$app/stores';
-    export let pageData: PageData;
 </script>
 
 
@@ -20,7 +19,9 @@
             <button type="submit" class="border px-3 border-blue-300 bg-blue-400 text-white font-bold capit py-1 w-32 rounded-md shadow-md">Login</button>
             <p class="text-xs mt-1">Not registered? <a href="/register" class="text-blue-600 ">Sig-up now </a></p>    
         </div>
-        <p>{$page.form?.message}</p>
+        {#if $page.form?.message != undefined}
+            <p class="text-red-500 font-semibold">{$page.form?.message}</p>
+        {/if}
     </form>
     
 </div>
