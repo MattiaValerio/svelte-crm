@@ -10,7 +10,7 @@
 	export let data: PageData;
 </script>
 
-<div class="bg-black w-screen flex items-center gap-5">
+<div class="bg-black w-screen flex items-center gap-5 ">
 	<div class="h-full px-3 font-bold flex items-center">
 		<button class="text-white text-2xl text-center" on:click={()=> goto("/")}>MV<button/>
 	</div>
@@ -22,6 +22,6 @@
 	<Menu bind:open auth={data.info}/>
 </div>
 
-<div class="p-3">
+<div class="p-3 relative h-full">
 	<slot />
 </div>

@@ -62,5 +62,23 @@ export const actions: Actions = {
 		}
 	},
 	editProduct: async () => {},
-	deleteProduct: async () => {}
+	deleteProduct: async ({ params }) => {
+		console.log(request.body);
+		// try {
+		// 	await fetch(`/api/products/${id}`, {
+		// 		method: 'DELETE'
+		// 	});
+
+		// 	return {
+		// 		status: 200,
+		// 		response: 'Product deleted'
+		// 	};
+		// } catch (err) {
+		// 	console.log(err);
+		// 	return {
+		// 		status: 500,
+		// 		response: 'Error during product deletion'
+		// 	};
+		// }
+	}
 } satisfies Actions;
