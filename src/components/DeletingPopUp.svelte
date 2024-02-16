@@ -20,10 +20,9 @@
         <p>Vuoi procedere?</p>
         <div class="flex w-full gap-5 justify-around">
             <button class="w-full bg-green-500 text-white font-semibold uppercase py-2 rounded-sm" on:click={()=> closePopUp()}>NO</button>
-            <form action="?/deleteProduct" method="POST" class="w-full" >
-                <button type="submit" class="w-full rounded-sm text-white font-semibold uppercase py-2  bg-red-500" on:click={()=> deleteProduct()}>SI</button>
-            </form>
-                
+            
+            <button class="w-full rounded-sm text-white font-semibold uppercase py-2  bg-red-500" on:click={()=> deleteProduct()}>SI</button>
+        
         </div>
     </div>
 </div>

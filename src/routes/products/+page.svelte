@@ -8,6 +8,9 @@
 	let newProduct: boolean = false;
 	let deleteItem: boolean = false;
 	let deletingProduct: Products | undefined;
+	let editProduct: boolean = false;
+	let editingProduct: Products | undefined;
+
 	function createNewProduct() {
 		newProduct = true;
 	}
@@ -17,9 +20,31 @@
 		deletingProduct = event.detail.product;
 	}
 
+	const DeleteProductCall = async (product: Products | undefined)=>{
+		
+		await fetch(`/api/products`, {
+			method: 'DELETE',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({id: deletingProduct?.id}),
+		})
+		.then(()=> $page.data?.products.splice($page.data?.products.indexOf(deletingProduct),1))
+		.then(()=> deleteItem = !deleteItem)
+		.catch((error) => {
+			console.error('Error:', error);
+		});
+
+	}
+
+	const updateProduct = (event: CustomEvent<any>)=>{
+		editProduct = !editProduct;
+		editingProduct = event.detail.product;
+	}
+
 </script>
 
-{#if $page.data.user?.roleId === 2 && newProduct === false && deleteItem != true}
+{#if $page.data.user?.roleId === 2 && newProduct === false && deleteItem != true && editProduct != true}
 	<button
 		on:click={() => createNewProduct()}
 		class="flex bg-red-500 text-white font-bold w-full items-center justify-center py-3 rounded-md my-3"
@@ -32,17 +57,25 @@
 
 {#if newProduct}
 	<NewProduct on:closePopUp={()=> newProduct = false}/>
-{:else if deleteItem}
 
-	<DeletingPopUp product={deletingProduct} on:closePopUp={()=> deleteItem = !deletItem} on:deleteProduct={(event)=> console.log(event.detail.product.id)}/>
-	
+
+		
+{:else if deleteItem}
+	<DeletingPopUp product={deletingProduct} on:closePopUp={()=> deleteItem = !deletItem} on:deleteProduct={(event)=> DeleteProductCall(deletingProduct)}/>
+
+
+
+{:else if editProduct}
+	<NewProduct UpdatingProduct={true} product={editingProduct} on:closePopUp={()=> editProduct = false}/>
+
+
+
 {:else}
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-5">
 		{#each $page.data?.products as item}
 		<div class="col-span-1">
-			<ProductCard product={item} user={$page.data?.user} on:delete={(event)=> deletItem(event)}/>
+			<ProductCard product={item} user={$page.data?.user} on:edit={(event)=> updateProduct(event)} on:delete={(event)=> deletItem(event)}/>
 		</div>
 		{/each}
 	</div>
-	
 {/if}

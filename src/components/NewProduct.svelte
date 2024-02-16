@@ -1,28 +1,22 @@
 <script lang="ts">
+	import type { Products } from "@prisma/client";
     import { createEventDispatcher } from "svelte";
     
-    type Product = {
-            id: number;
-            name: string;
-            description: string;
-            price: number;
-            available: boolean;
-            createdAt: string;
-        }
     export let UpdatingProduct: boolean = false;
-    export let product: Product = {
-        id: 0,
+    export let product: Products | undefined = {
+        id: "",
         name: "",
         description: "",
         available: false,
         price: 0,
-        createdAt: ""
+        created_at: new Date()
     };
 
     const dispatch = createEventDispatcher();
     const closePopUp = ()=>{
         dispatch("closePopUp");
-};
+    };
+    
 </script>
 
 
