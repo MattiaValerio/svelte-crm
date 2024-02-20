@@ -79,7 +79,7 @@
 
 {:else if viewDetails}
 	
-		<DeatailedProduct product={viewDetailsProduct} on:closePopUp={()=> viewDetails = !viewDetails} on:exitClick={()=> viewDetails = !viewDetails}/>
+		<DeatailedProduct user={$page.data?.user} product={viewDetailsProduct} on:closePopUp={()=> viewDetails = !viewDetails} on:exitClick={()=> viewDetails = !viewDetails}/>
 
 {:else}
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-5">

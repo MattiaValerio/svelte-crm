@@ -22,7 +22,7 @@
             {:else}
                 <p class="text-red-500">Non disponibile</p>
             {/if}
-            {#if user?.roleId != 1}
+            {#if user?.roleId == 2 || user?.roleId == 3}
                 <p class="font-semibold">€ {product?.price}</p>
             {/if}
 

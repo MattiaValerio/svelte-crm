@@ -1,9 +1,12 @@
 <script lang="ts">
-	import type { Products } from "@prisma/client";
+	  import type { Products } from "@prisma/client";
     import { createEventDispatcher } from "svelte";
+    import type { User } from "lucia";
 
-    const dispatch = createEventDispatcher();
+    export let user: User | null | undefined;
     export let product: Products | undefined;
+    
+    const dispatch = createEventDispatcher();
 </script>
 
 <div class="">
@@ -20,10 +23,12 @@
               <dt class="text-sm font-medium leading-6 text-gray-900">Nome</dt>
               <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{product?.name}</dd>
             </div>
-            <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt class="text-sm font-medium leading-6 text-gray-900">Prezzo</dt>
-              <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">${product?.price}</dd>
-            </div>
+            {#if user?.roleId == 2 || user?.roleId == 3}
+              <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                <dt class="text-sm font-medium leading-6 text-gray-900">Prezzo</dt>
+                <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">${product?.price}</dd>
+              </div>
+            {/if}
             <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
               <dt class="text-sm font-medium leading-6 text-gray-900">Descrizione</dt>
               <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{product?.description}</dd>
