@@ -14,7 +14,7 @@
 </script>
 
 
-<div class="flex items-center justify-center absolute top-0 left-0 right-0 bottom-[20%]">
+<div class="flex items-center justify-center absolute left-0 right-0">
     <div class="w-80 h-40 m-5 p-4 flex flex-col justify-center items-center gap-4 border rounded-md">
         <p>Stai eliminando <b>{product?.name}</b></p>
         <p>Vuoi procedere?</p>

@@ -4,8 +4,11 @@
 	import DeletingPopUp from '../../components/DeletingPopUp.svelte';
 	import ProductCard from '../../components/ProductCard.svelte';
 	import type { Products } from '@prisma/client';
+	import DeatailedProduct from '../../components/DeatailedProduct.svelte';
 
 	let newProduct: boolean = false;
+	let viewDetails: boolean = false;
+	let viewDetailsProduct: Products | undefined;
 	let deleteItem: boolean = false;
 	let deletingProduct: Products | undefined;
 	let editProduct: boolean = false;
@@ -42,9 +45,15 @@
 		editingProduct = event.detail.product;
 	}
 
+	const viewDetail = (event: CustomEvent<any>)=>{
+		viewDetails = !viewDetails;
+		viewDetailsProduct = event.detail.product;
+	}
+
 </script>
 
-{#if $page.data.user?.roleId === 2 && newProduct === false && deleteItem != true && editProduct != true}
+<div class="">
+	{#if $page.data.user?.roleId === 2 && newProduct === false && deleteItem != true && editProduct != true && viewDetails != true}
 	<button
 		on:click={() => createNewProduct()}
 		class="flex bg-red-500 text-white font-bold w-full items-center justify-center py-3 rounded-md my-3"
@@ -68,14 +77,21 @@
 {:else if editProduct}
 	<NewProduct UpdatingProduct={true} product={editingProduct} on:closePopUp={()=> editProduct = false}/>
 
-
+{:else if viewDetails}
+	
+		<DeatailedProduct product={viewDetailsProduct} on:closePopUp={()=> viewDetails = !viewDetails} on:exitClick={()=> viewDetails = !viewDetails}/>
 
 {:else}
 	<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-5">
 		{#each $page.data?.products as item}
 		<div class="col-span-1">
-			<ProductCard product={item} user={$page.data?.user} on:edit={(event)=> updateProduct(event)} on:delete={(event)=> deletItem(event)}/>
+			<ProductCard product={item} user={$page.data?.user} 
+						 on:edit={(event)=> updateProduct(event)} 
+						 on:delete={(event)=> deletItem(event)}
+						 on:detail={(event)=> viewDetail(event)}/>
 		</div>
 		{/each}
 	</div>
 {/if}
+
+</div>
