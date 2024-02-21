@@ -1,5 +1,5 @@
 <script lang="ts">
-	import NewProduct from './../../components/NewProduct.svelte';
+	import NewProduct from '../../components/NewProduct.svelte';
 	import { page } from '$app/stores';
 	import DeletingPopUp from '../../components/DeletingPopUp.svelte';
 	import ProductCard from '../../components/ProductCard.svelte';

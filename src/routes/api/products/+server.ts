@@ -9,7 +9,7 @@ export const GET: RequestHandler = async () => {
 		return new Response(
 			JSON.stringify({
 				status: 200,
-				body: products
+				body: products.sort((a, b) => b.created_at.getTime() - a.created_at.getTime())
 			})
 		);
 	} catch (error) {
