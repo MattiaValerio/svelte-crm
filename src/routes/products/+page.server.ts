@@ -61,23 +61,35 @@ export const actions: Actions = {
 			};
 		}
 	},
-	editProduct: async () => {}
-	// deleteProduct: async ({ params }) => {
-	// 	console.log(params);
-	// 	try {
-	// 		await fetch(`/api/products/${id}`, {
-	// 			method: 'DELETE'
-	// 		});
-	// 		return {
-	// 			status: 200,
-	// 			response: 'Product deleted'
-	// 		};
-	// 	} catch (err) {
-	// 		console.log(err);
-	// 		return {
-	// 			status: 500,
-	// 			response: 'Error during product deletion'
-	// 		};
-	// 	}
-	// }
+	editProduct: async ({ request, fetch }) => {
+		const data = await request.formData();
+		const id = data.get('id')!.toString();
+		const name = data.get('name')!.toString();
+		const description = data.get('description')!.toString();
+		const price = data.get('price')?.toString();
+		const available = data.get('available')?.toString() === 'on' ? true : false;
+
+		try {
+			await fetch('/api/products', {
+				method: 'PATCH',
+				body: JSON.stringify({
+					id,
+					name,
+					description,
+					price,
+					available
+				})
+			});
+			return {
+				status: 200,
+				response: 'Product updated'
+			};
+		} catch (err) {
+			console.log(err);
+			return {
+				status: 500,
+				response: 'Error during product update'
+			};
+		}
+	}
 } satisfies Actions;

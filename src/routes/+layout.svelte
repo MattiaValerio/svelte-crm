@@ -22,6 +22,6 @@
 	<Menu bind:open auth={data.info}/>
 </div>
 
-<div class="p-3 relative h-full">
+<div class="p-3 relative">
 	<slot />
 </div>

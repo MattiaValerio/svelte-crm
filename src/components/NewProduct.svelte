@@ -17,13 +17,23 @@
         dispatch("closePopUp");
     };
     
+    
+    
 </script>
 
 
-<form method="POST" action={UpdatingProduct ? "?/updateProuct" : "?/addProduct"} class="border rounded-md flex flex-col gap-3 p-4">
-    <div class="flex flex-col">
-        <label for="name" class="uppercase font-semibold">Codice</label>
-        <input type="text" name="name" class="border rounded-md h-10 px-3" value={product?.name}>
+<form method="POST" action={UpdatingProduct ? "?/editProduct" : "?/addProduct"} class="border rounded-md flex flex-col gap-3 p-4">
+    <div class="flex gap-5">
+        <div class="flex w-full flex-col">
+            <label for="name" class="uppercase font-semibold">Codice</label>
+            <input type="text" name="name" class="border rounded-md h-10 px-3" value={product?.name}>
+        </div>
+        {#if UpdatingProduct}
+            <div class="flex w-full flex-col">
+                <label for="id" class="uppercase font-semibold">Id prodotto</label>
+                <input type="text" name="id" readonly={true} class="border rounded-md h-10 px-3" value={product?.id}>
+            </div>
+        {/if}
     </div>
     <div class="flex flex-col">
         <label for="description" class="uppercase font-semibold">Descrizione</label>
