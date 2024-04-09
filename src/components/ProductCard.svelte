@@ -1,4 +1,7 @@
 <script lang="ts">
+	import BytesizeEye from './Icons/BytesizeEye.svelte';
+	import BytesizeTrash from './Icons/BytesizeTrash.svelte';
+	import BytesizeEdit from './Icons/BytesizeEdit.svelte';
 	import type { Products } from '@prisma/client';
 	import type { User } from "lucia";
     import { createEventDispatcher } from 'svelte';
@@ -28,18 +31,20 @@
 
             {#if user?.roleId === 2}
                 <div class="flex gap-2">
-                    <button class="px-3 py-2 w-full bg-red-400 rounded-md " on:click={()=> dispatch("delete", {
+                    <button class="px-3 py-2 w-full bg-red-400 rounded-md flex items-center justify-center" on:click={()=> dispatch("delete", {
                         product: product
-                    })}>D</button>
+                    })}><BytesizeTrash /></button>
                     <button on:click={()=> dispatch("edit", {
                         product: product
-                    })} class="bg-blue-400 w-full rounded-md px-4 py-2">E</button>
+                    })} class="bg-blue-400 w-full rounded-md px-4 py-2 flex justify-center items-center"><BytesizeEdit /></button>
                 </div>
             {/if}
 
-            <button class="bg-green-400 w-full rounded-md px-4 py-2 text-white font-bold uppercase" on:click={()=> dispatch("detail", {
+            <button class="bg-green-400 w-full rounded-md  font-bold uppercase flex justify-center items-center px-1 py-2" on:click={()=> dispatch("detail", {
                 product: product
-            })}>Dettaglio</button>
+                })}>
+                 <BytesizeEye/>
+            </button>
             
             
         </div>
